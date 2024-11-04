@@ -1,0 +1,8 @@
+<!-- res/drawable/circular_checkbox.xml -->
+<!-- 定义一个圆形复选框 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="oval">
+    <solid android:color="@android:color/transparent" /> <!-- 没有填充颜色 -->
+    <stroke android:width="1dp" android:color="@color/grey" /> <!-- 边框颜色 -->
+    <size android:width="16dp" android:height="16dp" />
+</shape>

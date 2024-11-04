@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  整个activity的主题配置  -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/white</item> <!-- 设置状态栏颜色 -->
+        <item name="android:windowLightStatusBar">true</item> <!-- 设置状态栏字体为深色 -->
+        <item name="colorControlActivated">#74A9E0</item> <!-- 设置选中时的颜色 -->
+        <item name="colorAccent">#74A9E0</item> <!-- 可选 -->
+    </style>
+
+    <style name="RoundedCornersImage">
+        <item name="cornerSize">20dp</item>
+    </style>
+
+
+    <style name="RoundedCornersButton">
+        <item name="cornerSize">15dp</item> <!-- 调整此值以更改圆角大小 -->
+    </style>
+
+    <style name="CustomMaterialCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/custom_circle_checkbox</item>
+    </style>
+
+
+</resources>

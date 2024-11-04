@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PersonalExpenseTracker</string>
+    <string name="app_name">Tracker</string>
+    <string name="agreement_text">我已阅读并同意《<u>用户协议</u>》和《<u>隐私协议</u>》</string>
 </resources>

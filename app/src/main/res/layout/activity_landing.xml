@@ -1,0 +1,76 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:backgroundTint="@color/Argentina_blue"
+        android:paddingLeft="18dp"
+        android:padding="8dp"
+        >
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="446dp"
+            android:gravity="center">
+
+        <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/appLogo"
+                android:layout_width="97dp"
+                android:layout_height="97dp"
+                android:src="@drawable/app_logo"
+                app:shapeAppearanceOverlay="@style/RoundedCornersImage"
+                android:clickable="true"/>
+
+        <TextView
+                android:text="Tracker"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:id="@+id/textView"
+                android:fontFamily="serif"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1F1D1D"
+                android:typeface="sans"
+                android:textAlignment="center"
+                android:height="10dp"
+                android:paddingTop="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"/>
+
+    <com.google.android.material.button.MaterialButton
+            app:theme="@style/Theme.MaterialComponents"
+            android:id="@+id/chooseLoginButton"
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:text="选择登录方式"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:shapeAppearanceOverlay="@style/RoundedCornersButton"
+            app:backgroundTint="@color/Argentina_blue"
+            android:fontFamily="sans-serif"
+            android:backgroundTint="@color/Argentina_blue"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/agreementCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:text="@string/agreement_text"
+            android:autoLink="web"
+            android:textColor="@color/grey"
+            android:checked="false"
+            style="@style/CustomMaterialCheckBox"
+            android:textSize="12sp"
+            android:padding="4dp"
+            android:textAlignment="viewStart"/>
+
+
+</LinearLayout>
