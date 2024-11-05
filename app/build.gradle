@@ -66,6 +66,9 @@ dependencies {
     // 可以自定义边框，圆角等
     implementation 'com.google.android.material:material:1.12.0'
 
+    // 接入微信sdk
+    api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

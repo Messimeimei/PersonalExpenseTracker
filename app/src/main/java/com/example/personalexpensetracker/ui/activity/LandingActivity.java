@@ -1,6 +1,5 @@
 package com.example.personalexpensetracker.ui.activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.widget.CheckBox;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.personalexpensetracker.R;
+import com.example.personalexpensetracker.utils.DialogUtils;
 
 public class LandingActivity extends AppCompatActivity {
     private CheckBox agreementCheckBox;
@@ -30,7 +30,21 @@ public class LandingActivity extends AppCompatActivity {
                     showLoginOptions();
                 }
                 else {
-                    showAgreementDialog();
+                    DialogUtils.showAgreementDialog(LandingActivity.this, new Runnable() {
+                                @Override
+                                public void run() {
+                                    agreementCheckBox.setChecked(true);
+                                    showLoginOptions();
+                                }
+                            },
+                            new Runnable() {
+                                @Override
+                                public void run() {
+
+                                }
+                            }
+                    );
+//                    showAgreementDialog();
                 }
             }
         });
@@ -86,6 +100,7 @@ public class LandingActivity extends AppCompatActivity {
                             startActivity(new Intent(LandingActivity.this, PhoneLoginActivity.class));
                         } else if (which == 2) {
                             // 注册
+                            startActivity(new Intent(LandingActivity.this, RegisterActivity.class));
                         }
                     }
                 }).show();

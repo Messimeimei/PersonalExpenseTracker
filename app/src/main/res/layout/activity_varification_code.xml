@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="32dp"
+              android:background="@color/Argentina_white">
+
+    <!-- 返回箭头和注册标题 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="22dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:layout_width="246dp"
+                android:layout_height="wrap_content"
+                android:text="注册"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- Logo 和应用名称 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/appLogo"
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/app_logo"
+                app:shapeAppearanceOverlay="@style/RoundedCornersImage"
+                android:clickable="true"
+                android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:text="Tracker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1F1D1D"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- 手机号输入框 -->
+    <EditText
+            android:id="@+id/phoneUneditableText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
+            android:background="@color/white_smoke"
+            android:textSize="14sp"
+            android:textColor="@color/LightGrey"
+            android:editable="false"
+            android:text="之前注册的手机号"/>
+
+    <!-- 验证码输入框和获取验证码按钮 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+        <EditText
+                android:id="@+id/verificationCodeEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:padding="16dp"
+                android:background="@color/white_smoke"
+                android:textSize="14sp"
+                android:maxLength="6"/>
+
+        <Button
+                android:id="@+id/getVerificationCodeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取验证码"
+                android:layout_marginStart="8dp"
+                android:padding="8dp"
+                android:backgroundTint="@color/Argentina_blue"
+                android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+    <!-- 协议勾选框 -->
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"/>
+
+    <!-- 下一步按钮 -->
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/nextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="下一步"
+            android:layout_marginTop="24dp"
+            app:shapeAppearanceOverlay="@style/RoundedCornersButton"
+            app:backgroundTint="@color/white_smoke"
+            android:textColor="@color/gains_boro"
+            android:textSize="16sp"
+            android:enabled="false"/>
+
+</LinearLayout>

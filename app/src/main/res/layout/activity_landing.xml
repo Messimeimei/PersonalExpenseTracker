@@ -59,18 +59,42 @@
             android:fontFamily="sans-serif"
             android:backgroundTint="@color/Argentina_blue"/>
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/agreementCheckBox"
+<!--    <com.google.android.material.checkbox.MaterialCheckBox-->
+<!--            android:id="@+id/agreementCheckBox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="37dp"-->
+<!--            android:text="@string/agreement_text"-->
+<!--            android:autoLink="web"-->
+<!--            android:textColor="@color/grey"-->
+<!--            android:checked="false"-->
+<!--            style="@style/CustomMaterialCheckBox"-->
+<!--            android:textSize="12sp"-->
+<!--            android:padding="4dp"-->
+<!--            android:textAlignment="viewStart"/>-->
+
+    <!-- 协议勾选框 -->
+    <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:text="@string/agreement_text"
-            android:autoLink="web"
-            android:textColor="@color/grey"
-            android:checked="false"
-            style="@style/CustomMaterialCheckBox"
-            android:textSize="12sp"
-            android:padding="4dp"
-            android:textAlignment="viewStart"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/agreementCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                style="@style/CustomMaterialCheckBox"
+                android:background="@android:color/transparent"/>
+
+        <TextView
+                android:id="@+id/agreementTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我已阅读并同意《用户协议》和《隐私协议》"
+                android:textColor="@color/LightGrey"
+                android:textSize="12sp"/>
+    </LinearLayout>
 
 
 </LinearLayout>
