@@ -95,7 +95,10 @@ public class VerificationActivity extends AppCompatActivity {
 
         // 下一步按钮点击事件
         nextButton.setOnClickListener(v -> {
-            // 处理下一步逻辑
+            // 进入设置密码页面
+            Intent intentSetPassword = new Intent(VerificationActivity.this, SetPasswordActivity.class);
+            intentSetPassword.putExtra("phoneNumber", phoneUneditableText.getText().toString().trim());
+            startActivity(intentSetPassword);
         });
     }
 

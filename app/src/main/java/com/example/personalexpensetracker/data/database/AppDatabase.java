@@ -9,17 +9,22 @@ import android.content.Context;
 
 @Database(entities = {User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase instance;
-
     public abstract UserDao userDao();
 
-    public static synchronized AppDatabase getInstance(Context context) {
-        if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "user_database")
-                    .fallbackToDestructiveMigration()
-                    .build();
+    private static volatile AppDatabase INSTANCE;
+
+    public static AppDatabase getInstance(Context context) {
+        // 所有其他需要用到数据库实例的地方通过 AppDatabase db = AppDatabase.getInstance(this)即可
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    AppDatabase.class, "user_database")
+                            .build();
+                }
+            }
         }
-        return instance;
+        return INSTANCE;
     }
 }
+

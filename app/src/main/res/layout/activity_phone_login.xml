@@ -1,51 +1,241 @@
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="32dp"
+              android:background="@color/Argentina_white">
 
-    <EditText
-            android:id="@+id/phoneInput"
+    <!-- 返回箭头和登录标题 -->
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入手机号"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-    <EditText
-            android:id="@+id/passwordInput"
+        <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="22dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:layout_width="246dp"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- Logo 和应用名称 -->
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入密码"
-            android:inputType="textPassword"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp">
 
-    <CheckBox
-            android:id="@+id/agreementCheckBox"
+        <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/appLogo"
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/app_logo"
+                app:shapeAppearanceOverlay="@style/RoundedCornersImage"
+                android:clickable="true"
+                android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:text="Tracker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1F1D1D"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- 使用手机号密码登录 -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="使用手机号密码登录"
+            android:textSize="12sp"
+            android:textColor="@color/LightGrey"
+            android:layout_marginTop="16dp"/>
+
+    <!-- 手机号输入框（使用 RelativeLayout 包裹） -->
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="请输入手机号"
+                android:inputType="phone"
+                android:layout_marginTop="8dp"
+                android:padding="16dp"
+                android:background="@color/white_smoke"
+                android:textSize="14sp"
+                android:importantForAccessibility="yes"/>
+    </RelativeLayout>
+
+    <!-- 密码输入框 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@color/white_smoke">
+
+        <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textSize="14sp"
+        android:background="@android:color/transparent"/>
+
+        <!-- 密码眼睛图标 -->
+        <ImageView
+                android:id="@+id/passwordEyeIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_eye_close"
+                android:contentDescription="眼睛图标"
+                android:clickable="true"
+                android:focusable="true"/>
+    </LinearLayout>
+
+    <!-- 协议勾选框 -->
+    <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我已阅读并同意《用户协议》和《隐私协议》"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="32dp">
 
-    <Button
+        <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/agreementCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                style="@style/CustomMaterialCheckBox"
+                android:background="@android:color/transparent"/>
+
+        <TextView
+                android:id="@+id/agreementTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我已阅读并同意《用户协议》和《隐私协议》"
+                android:textColor="@color/LightGrey"
+                android:textSize="12sp"/>
+    </LinearLayout>
+
+    <!-- 登录按钮 -->
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登录"/>
+            android:layout_height="56dp"
+            android:text="登录"
+            app:shapeAppearanceOverlay="@style/RoundedCornersButton"
+            app:backgroundTint="@color/Argentina_blue"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="-8dp"/>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="找回密码"
-            android:layout_marginTop="16dp"
-            android:clickable="true"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="注册账号"
-            android:layout_marginTop="8dp"
-            android:clickable="true"/>
-
-    <Button
+    <!-- 找回密码和注册账号按钮 -->
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="其他方式登录（微信登录）"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="找回密码"
+                android:textSize="14sp"
+                android:textColor="@color/LightGrey"
+                android:clickable="true"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:textSize="14sp"
+                android:textColor="@color/LightGrey"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/registerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册账号"
+                android:textSize="14sp"
+                android:textColor="@color/LightGrey"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="8dp" />
+
+    </LinearLayout>
+
+    <!-- 其他方式登录 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="112dp">
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="0.2dp"
+                android:layout_weight="1"
+                android:background="@color/LightGrey"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他方式登录"
+                android:textSize="12sp"
+                android:textColor="@color/LightGrey"
+                android:layout_marginHorizontal="16dp"/>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="0.2dp"
+                android:layout_weight="1"
+                android:background="@color/LightGrey"/>
+    </LinearLayout>
+
+    <!-- 微信登录图标 -->
+    <ImageView
+            android:id="@+id/wechatLoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_wechat_logo"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/black_border_rounded"
+            android:stateListAnimator="@animator/button_click_feedback"
+            android:contentDescription="微信登录"
+            android:clickable="true"
+            android:focusable="true"/>
+
 </LinearLayout>

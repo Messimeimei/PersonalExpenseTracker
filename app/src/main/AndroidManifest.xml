@@ -30,6 +30,9 @@
 
         <activity android:name=".ui.activity.VerificationActivity"/>
 
+        <activity android:name=".ui.activity.SetPasswordActivity"/>
+
+
     </application>
 
 </manifest>

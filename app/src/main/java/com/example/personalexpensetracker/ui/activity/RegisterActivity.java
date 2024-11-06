@@ -7,14 +7,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.CheckBox;
-import android.widget.ImageView;
+import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 import com.example.personalexpensetracker.R;
+import com.example.personalexpensetracker.data.dao.UserDao;
+import com.example.personalexpensetracker.data.database.AppDatabase;
+import com.example.personalexpensetracker.data.model.User;
+import com.example.personalexpensetracker.utils.AppExecutors;
 import com.example.personalexpensetracker.utils.DialogUtils;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
@@ -24,8 +26,10 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerButton;
     private CheckBox agreementCheckbox;
     private ImageView backButton;
-    private boolean isPhoneValid = false;  // Track phone validation state
-    private boolean isAgreementChecked = false;  // Track agreement checkbox state
+    private boolean isPhoneValid = false;
+    private boolean isPhoneRegistered = false;
+    private boolean isAgreementChecked = false;
+    private UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +47,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         phoneInput = findViewById(R.id.phoneEditText);
         phoneInput.setBackground(shapeDrawable);
-
         registerButton = findViewById(R.id.registerButton);
         agreementCheckbox = findViewById(R.id.agreementCheckBox);
         backButton = findViewById(R.id.backButton);
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        AppDatabase db = AppDatabase.getInstance(this); // 单例模式，全局共享单例数据库实例
+        userDao = db.userDao();
 
         // 添加手机号输入监听
         phoneInput.addTextChangedListener(new TextWatcher() {
@@ -81,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPhoneValid) {
+                if (isPhoneValid && !isPhoneRegistered) {
                     if (isAgreementChecked) {
                         // 复选框已勾选，直接弹出确认窗口
                         showPhoneConfirmationDialog();
@@ -89,14 +94,24 @@ public class RegisterActivity extends AppCompatActivity {
                         // 复选框未勾选，弹出协议确认窗口
                         showAgreementConfirmationDialog();
                     }
+                } else if (!isPhoneValid){
+                    // 手机号不对，点击注册弹出提示
+                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                } else if (isPhoneRegistered){
+                    // 手机号不对，点击注册弹出提示
+                    Toast.makeText(RegisterActivity.this, "该手机号已被注册", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    // 1. 验证手机号格式
+    // 1. 验证手机号格式和是否被注册
     private void validatePhoneNumber(String phoneNumber) {
         isPhoneValid = isPhoneNumberValid(phoneNumber);
+        AppExecutors.getDiskIO().execute(() -> {
+            User existingUser = userDao.getUserByPhone(phoneNumber);
+            isPhoneRegistered = existingUser != null;
+        });
     }
 
     // 2. 更新注册按钮状态

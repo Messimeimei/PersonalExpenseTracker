@@ -14,13 +14,15 @@
     </style>
 
 
-    <style name="RoundedCornersButton">
-        <item name="cornerSize">15dp</item> <!-- 调整此值以更改圆角大小 -->
-    </style>
-
     <style name="CustomMaterialCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="android:button">@drawable/custom_circle_checkbox</item>
     </style>
+
+    <style name="RoundedCornersButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item> <!-- 你可以调整圆角的大小 -->
+    </style>
+
 
 
 </resources>
