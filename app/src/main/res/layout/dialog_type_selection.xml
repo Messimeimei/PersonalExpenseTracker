@@ -1,0 +1,155 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/background_grey">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+        <ImageView
+                android:id="@+id/closeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_close"
+                android:tint="@color/black"
+                android:layout_gravity="start"/>
+
+        <TextView
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="请选择类型"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gains_boro"
+            android:layout_marginVertical="8dp"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="全部类型"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/Argentina_white"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="8dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="支出"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground"/>
+
+    <GridLayout
+            android:id="@+id/expenseGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:padding="8dp"
+            android:layout_marginTop="8dp">
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="餐饮"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="购物"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="交通"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="教育"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+    </GridLayout>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="收入"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="16dp"/>
+
+    <GridLayout
+            android:id="@+id/incomeGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:padding="8dp"
+            android:layout_marginTop="8dp">
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="工资"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="奖金"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="投资收入"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_columnWeight="1"
+                android:text="其他收入"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginHorizontal="8dp"/>
+    </GridLayout>
+</LinearLayout>

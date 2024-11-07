@@ -32,6 +32,9 @@
 
         <activity android:name=".ui.activity.SetPasswordActivity"/>
 
+        <activity android:name=".ui.activity.ExpenseRecordDisplayActivity"/>
+
+
 
     </application>
 

@@ -6,12 +6,21 @@
     <color name="background_color">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="grey">#DCDCDC</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="light_grey">#56F5F5F5</color>
     <color name="white_smoke">#F5F5F5</color>
     <color name="gains_boro">#DCDCDC</color>
-    <color name="LightGrey">#D3D3D3</color>
+    <color name="midGrey">#D3D3D3</color>
+    <color name="grey">#DCDCDC</color>
     <color name="Silver">#C0C0C0</color>
     <color name="DarkGray">#A9A9A9</color>
+    <color name="background_grey">#f3f3f3</color>
+    <color name="text_deep_grey">#7c7c7c</color>
+    <color name="text_light_grey">#b1b1b1</color>
+    <color name="background_white">#fbfbfb</color>
+
+
+
+
 
 </resources>

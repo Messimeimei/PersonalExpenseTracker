@@ -128,7 +128,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     Toast.makeText(PhoneLoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 });
                 // 跳转到下一个页面
-                startActivity(new Intent(PhoneLoginActivity.this, LandingActivity.class));
+                startActivity(new Intent(PhoneLoginActivity.this, ExpenseRecordDisplayActivity.class));
                 finish();
             }
         });

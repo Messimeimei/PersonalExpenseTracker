@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="使用手机号密码登录"
             android:textSize="12sp"
-            android:textColor="@color/LightGrey"
+            android:textColor="@color/midGrey"
             android:layout_marginTop="16dp"/>
 
     <!-- 手机号输入框（使用 RelativeLayout 包裹） -->
@@ -141,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我已阅读并同意《用户协议》和《隐私协议》"
-                android:textColor="@color/LightGrey"
+                android:textColor="@color/midGrey"
                 android:textSize="12sp"/>
     </LinearLayout>
 
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:text="找回密码"
                 android:textSize="14sp"
-                android:textColor="@color/LightGrey"
+                android:textColor="@color/midGrey"
                 android:clickable="true"
                 android:layout_marginEnd="8dp"/>
 
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:text="|"
                 android:textSize="14sp"
-                android:textColor="@color/LightGrey"
+                android:textColor="@color/midGrey"
                 android:layout_marginEnd="8dp"/>
 
         <Button
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:text="注册账号"
                 android:textSize="14sp"
-                android:textColor="@color/LightGrey"
+                android:textColor="@color/midGrey"
                 android:background="@android:color/transparent"
                 android:layout_marginEnd="8dp" />
 
@@ -206,21 +206,21 @@
                 android:layout_width="0dp"
                 android:layout_height="0.2dp"
                 android:layout_weight="1"
-                android:background="@color/LightGrey"/>
+                android:background="@color/midGrey"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="其他方式登录"
                 android:textSize="12sp"
-                android:textColor="@color/LightGrey"
+                android:textColor="@color/midGrey"
                 android:layout_marginHorizontal="16dp"/>
 
         <View
                 android:layout_width="0dp"
                 android:layout_height="0.2dp"
                 android:layout_weight="1"
-                android:background="@color/LightGrey"/>
+                android:background="@color/midGrey"/>
     </LinearLayout>
 
     <!-- 微信登录图标 -->

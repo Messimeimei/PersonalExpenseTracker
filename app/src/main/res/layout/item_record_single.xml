@@ -1,0 +1,111 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="start|center_vertical"
+        android:background="@color/Argentina_white"
+        >
+
+    <!-- Left side: Category icon -->
+    <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/categoryLogo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/app_logo"
+            app:shapeAppearanceOverlay="@style/RoundedRecordImage"/>
+
+    <!-- Right side: Category, amount, time, and remark -->
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+        <!-- First row: Category and amount -->
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|end">
+
+            <!-- Category TextView -->
+            <TextView
+                    android:id="@+id/categoryTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="教育"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:gravity="start|center_vertical"/>
+
+            <!-- Amount TextView -->
+            <TextView
+                    android:id="@+id/amountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="支出 17.50"
+                    android:textColor="@color/midGrey"
+                    android:textSize="14sp"
+                    android:gravity="end|center_vertical"
+                    android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- Second row: Time and remark -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical">
+
+            <!-- Time TextView -->
+
+            <TextView
+                    android:id="@+id/timeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22:32"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="12sp"/>
+
+            <!-- | separator -->
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="|"
+                    android:textColor="@color/midGrey"
+                    android:textSize="12sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"/>
+
+            <!-- Remark TextView -->
+            <TextView
+                    android:id="@+id/remarksTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="购买教科书"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.3dp"
+                android:id="@+id/view"
+                android:layout_weight="1"
+                android:background="@color/Silver"
+                android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <!-- Add horizontal line beneath the icon -->
+    <!-- Adjust as needed to start at icon width -->
+</LinearLayout>

@@ -61,6 +61,7 @@ dependencies {
     // 添加 Room 依赖项
     implementation 'androidx.room:room-runtime:2.4.3'
     implementation libs.androidx.constraintlayout
+    implementation libs.androidx.recyclerview
     annotationProcessor 'androidx.room:room-compiler:2.4.3' // Java项目
 
     // 可以自定义边框，圆角等
@@ -68,6 +69,10 @@ dependencies {
 
     // 接入微信sdk
     api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'  //
+
+    implementation 'androidx.fragment:fragment:1.5.5'  // 动画依赖
 
 
     testImplementation libs.junit

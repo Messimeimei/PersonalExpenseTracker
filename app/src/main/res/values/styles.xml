@@ -13,6 +13,10 @@
         <item name="cornerSize">20dp</item>
     </style>
 
+    <style name="RoundedRecordImage">
+        <item name="cornerSize">18dp</item>
+    </style>
+
 
     <style name="CustomMaterialCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="android:button">@drawable/custom_circle_checkbox</item>
@@ -23,6 +27,11 @@
         <item name="cornerSize">15dp</item> <!-- 你可以调整圆角的大小 -->
     </style>
 
+    <!--    弹窗的出现动画-->
+    <style name="BottomSheetSlideUpAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>  <!-- 你可以根据需求修改动画 -->
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item> <!-- 弹窗消失时的动画 -->
+    </style>
 
 
 </resources>

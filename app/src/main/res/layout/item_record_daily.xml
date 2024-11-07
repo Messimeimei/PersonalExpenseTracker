@@ -1,0 +1,102 @@
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/background_white"
+            >
+
+        <!-- 日期与总收入/支出显示 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                android:padding="16dp">
+
+            <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11月7日 今天"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="end">
+
+                <!-- 支出文字和金额分开 -->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:id="@+id/outAmountLabelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="支出"
+                            android:textColor="@color/midGrey"
+                            android:textSize="12sp"/>
+
+                    <TextView
+                            android:id="@+id/outAmountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="17.50"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:layout_marginStart="4dp"/>
+                </LinearLayout>
+
+                <!-- 收入文字和金额分开 -->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp">
+
+                    <TextView
+                            android:id="@+id/inAmountLabelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="收入"
+                            android:textColor="@color/midGrey"
+                            android:textSize="12sp"/>
+
+                    <TextView
+                            android:id="@+id/inAmountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:layout_marginStart="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 记录详情容器 -->
+        <LinearLayout
+                android:id="@+id/recordDetailContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <!-- 动态记录内容将会加载在这里 -->
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
