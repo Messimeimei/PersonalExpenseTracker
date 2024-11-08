@@ -37,14 +37,23 @@
             android:background="@color/gains_boro"
             android:layout_marginVertical="8dp"/>
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="全部类型"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/Argentina_white"
-            android:layout_marginBottom="16dp"
-            android:layout_marginHorizontal="8dp"/>
+    <GridLayout
+            android:id="@+id/wholeTypeGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:padding="8dp"
+            android:layout_marginTop="8dp">
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="全部类型"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="8dp"/>
+    </GridLayout>
 
     <TextView
             android:layout_width="match_parent"

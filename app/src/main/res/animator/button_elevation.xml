@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <!-- 按钮按下时的elevation值，模拟深度变化 -->
+        <objectAnimator
+                android:propertyName="elevation"
+                android:valueFrom="8dp"
+                android:valueTo="12dp"
+                android:duration="100" />
+    </item>
+    <item>
+        <!-- 默认状态下的elevation值 -->
+        <objectAnimator
+                android:propertyName="elevation"
+                android:valueFrom="12dp"
+                android:valueTo="8dp"
+                android:duration="100" />
+    </item>
+</selector>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
@@ -71,10 +70,12 @@
             android:textColor="@color/midGrey"
             android:layout_marginTop="16dp"/>
 
-    <!-- 手机号输入框（使用 RelativeLayout 包裹） -->
-    <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+    <!-- 手机号输入框（直接使用LinearLayout包裹） -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
 
         <EditText
                 android:id="@+id/phoneEditText"
@@ -82,12 +83,11 @@
                 android:layout_height="48dp"
                 android:hint="请输入手机号"
                 android:inputType="phone"
-                android:layout_marginTop="8dp"
                 android:padding="16dp"
                 android:background="@color/white_smoke"
                 android:textSize="14sp"
                 android:importantForAccessibility="yes"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- 密码输入框 -->
     <LinearLayout
@@ -99,14 +99,13 @@
 
         <EditText
                 android:id="@+id/passwordEditText"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-        android:hint="请输入密码"
-        android:inputType="textPassword"
-        android:padding="16dp"
-        android:textSize="14sp"
-        android:background="@android:color/transparent"/>
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:background="@android:color/transparent"/>
 
         <!-- 密码眼睛图标 -->
         <ImageView
@@ -190,8 +189,7 @@
                 android:textSize="14sp"
                 android:textColor="@color/midGrey"
                 android:background="@android:color/transparent"
-                android:layout_marginEnd="8dp" />
-
+                android:layout_marginEnd="8dp"/>
     </LinearLayout>
 
     <!-- 其他方式登录 -->
@@ -237,5 +235,4 @@
             android:contentDescription="微信登录"
             android:clickable="true"
             android:focusable="true"/>
-
 </LinearLayout>

@@ -1,0 +1,317 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/background_grey">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+        <!-- 关闭按钮 -->
+        <ImageView
+                android:id="@+id/closeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_close"
+                android:tint="@color/black"
+                android:layout_gravity="start"/>
+
+        <!-- 请选择月份文本 -->
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="请选择月份"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <!-- 横线 -->
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gains_boro"
+            android:layout_marginVertical="8dp"/>
+
+    <!-- 年份和月份 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp">
+
+        <!-- 2022年及其对应月份按钮 -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2022年"
+                android:textColor="@color/text_light_grey"
+                android:padding="8dp"/>
+
+        <GridLayout
+                android:id="@+id/Year2022GridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:padding="8dp">
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="12月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"
+                    android:layout_marginBottom="8dp"/>
+
+        </GridLayout>
+
+        <!-- 2023年及其对应月份按钮 -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023年"
+                android:textColor="@color/text_light_grey"
+                android:padding="8dp"/>
+
+        <GridLayout
+                android:id="@+id/Year2023GridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:columnCount="4">
+
+            <!-- 1-12 月份按钮 -->
+            <Button
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="1月"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="5dp"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="2月"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="5dp"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="3月"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="5dp"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="4月"
+                    android:textColor="@color/black"
+                    android:layout_marginHorizontal="5dp"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="5月"
+                    android:layout_marginHorizontal="5dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="6月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="7月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="8月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="9月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="10月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="11月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="12月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <!-- 可添加其他月份按钮 -->
+
+        </GridLayout>
+
+        <!-- 2024年及其对应月份按钮 -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2024年"
+                android:textColor="@color/text_light_grey"
+                android:padding="8dp"/>
+
+        <GridLayout
+                android:id="@+id/Year2024GridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:columnCount="4">
+
+            <!-- 1-11 月份按钮 -->
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="1月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="2月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="3月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="4月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="5月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="6月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="7月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="8月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="9月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="10月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <Button
+                    android:layout_marginHorizontal="5dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="11月"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/Argentina_white"/>
+
+            <!-- 可添加其他月份按钮 -->
+
+        </GridLayout>
+    </LinearLayout>
+</LinearLayout>
