@@ -7,13 +7,21 @@ public class User {
 
     @PrimaryKey(autoGenerate = true)
     private long userId;
+
+    @ColumnInfo(name = "nickname")
     private String nickname;
+
+    @ColumnInfo(name = "phone")
     private String phone;
+
+    @ColumnInfo(name = "password")
     private String password;
+
+    @ColumnInfo(name = "registerDate")
+    public String registerDate;
 
     // 展示时格式化为 8 位数的字符串
     public String getFormattedId() {
-        // 格式化 ID 为 8 位数（展示用）
         return String.format("%08d", userId);
     }
 
@@ -47,5 +55,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(String registerDate) {
+        this.registerDate = registerDate;
     }
 }

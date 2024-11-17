@@ -22,6 +22,12 @@ public interface CategoryDao {
     @Delete
     void deleteCategory(Category category);
 
+    @Query("SELECT categoryName FROM category WHERE categoryId = :categoryId")
+    String getCategoryName(String categoryId);
+
+    @Query("SELECT categoryIcon FROM category WHERE categoryId = :categoryId")
+    int getCategoryIcon(int categoryId);
+
     // 查询所有类别，按名称排序
     @Query("SELECT * FROM category ORDER BY categoryName ASC")
     List<Category> getAllCategories();
@@ -30,7 +36,7 @@ public interface CategoryDao {
     List<Category> getCategoriesByUserId(long userId);
 
     // 根据用户id和所属类型返回对应type下所有的category
-    @Query("SELECT * FROM Category WHERE type = :type")
+    @Query("SELECT * FROM category WHERE type = :type")
     List<Category> getCategoriesByUserIdAndType(String type);
 
 }

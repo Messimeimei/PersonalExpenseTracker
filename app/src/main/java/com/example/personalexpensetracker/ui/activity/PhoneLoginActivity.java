@@ -130,7 +130,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 // 保存登录状态
                 SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putLong("'userId'",user.getUserId());
+                editor.putLong("userId",user.getUserId());
                 editor.putString("formattedUserId", String.valueOf(user.getFormattedId()));
                 editor.putString("nickname", user.getNickname());
                 editor.putString("phone", user.getPhone());

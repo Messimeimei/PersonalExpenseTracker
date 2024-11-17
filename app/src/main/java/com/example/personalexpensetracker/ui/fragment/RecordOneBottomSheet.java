@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.view.View;
@@ -66,8 +67,10 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
             if (!amountText.isEmpty() && selectedCategory != null) {
                 double amount = Double.parseDouble(amountText);
 
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
                 Long userId = sharedPreferences.getLong("userId", 0000001);
+                Log.d("记录插到哪位用户", "查看一下当前记录插到了哪个用户那里: " + userId);  // 打印userId
+
 
                 ExpenseRecord record = new ExpenseRecord();
                 record.setType(currentSelectedButton.getText().toString()); // 设置支出、收入、不计入收支

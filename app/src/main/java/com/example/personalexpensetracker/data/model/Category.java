@@ -1,18 +1,27 @@
 package com.example.personalexpensetracker.data.model;
 
 
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
-@Entity(tableName = "category")
+@Entity(tableName = "category", foreignKeys = @ForeignKey(
+        entity = User.class,
+        parentColumns = "userId",
+        childColumns = "userId",
+        onDelete = ForeignKey.CASCADE))
 public class Category {
     @PrimaryKey(autoGenerate = true)
     private int categoryId;
+
+    @ColumnInfo(name = "userId")
     private long userId;
+
+    @ColumnInfo(name = "categoryName")
     private String categoryName;
-    private int categoryIcon; // 图标资源 ID
+
+    @ColumnInfo(name = "categoryIcon")
+    private int categoryIcon;
+
+    @ColumnInfo(name = "type")
     private String type;
 
     public int getCategoryId() {
@@ -47,11 +56,8 @@ public class Category {
         this.categoryIcon = categoryIcon;
     }
 
-    public String getType() {
-        return type;
-    }
+    public String getType() {return type;}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public void setType(String type) {this.type = type;}
 }
+

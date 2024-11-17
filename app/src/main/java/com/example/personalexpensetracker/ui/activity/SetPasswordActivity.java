@@ -26,7 +26,11 @@ import com.example.personalexpensetracker.utils.AppExecutors;
 import com.google.android.material.button.MaterialButton;
 import com.example.personalexpensetracker.R;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SetPasswordActivity extends AppCompatActivity {
 
@@ -41,6 +45,12 @@ public class SetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
+        // todo：注册前删掉所有的文件，方便测试
+        File dbFile = SetPasswordActivity.this.getDatabasePath("your_database_name.db");
+        if (dbFile.exists()) {
+            dbFile.delete(); // 删除数据库文件
+        }
+
 
         // 初始化视图
         phoneUneditableText = findViewById(R.id.phoneUneditableText);
@@ -100,14 +110,19 @@ public class SetPasswordActivity extends AppCompatActivity {
             if (validateFields() && password.equals(confirmPassword)) {
                 // 注册成功
                 Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                // 获取当前注册时间
+                String registerDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
                 // 保存用户数据
                 User user = new User();
                 user.setNickname(nickname);
                 user.setPassword(password);
                 user.setPhone(phoneUneditableText.getText().toString());
+                user.setRegisterDate(registerDate);
                 AppExecutors.getDiskIO().execute(() -> {
                     // 插入User数据并获取userId
-                    long newUserId = userDao.insert(user);
+                    userDao.insert(user);
+                    long newUserId = user.getUserId();
                     // 插入默认类别，传入有效的userId
                     createDefaultCategories(newUserId);
                     // 获取插入的类别Id
@@ -115,7 +130,7 @@ public class SetPasswordActivity extends AppCompatActivity {
                     if (!categories.isEmpty()) {
                         int firstCategoryId = categories.get(0).getCategoryId();
                         // 插入一条示例的ExpenseRecord，类型是收入
-                        createDefaultExpenseRecord(newUserId, firstCategoryId);
+                        createDefaultExpenseRecord(newUserId, firstCategoryId, categories.get(0));
                     }
                     runOnUiThread(() -> {
                         startActivity(new Intent(SetPasswordActivity.this, PhoneLoginActivity.class));
@@ -233,7 +248,7 @@ public class SetPasswordActivity extends AppCompatActivity {
         }
     }
 
-    private void createDefaultExpenseRecord(long userId, int categoryId) {
+    private void createDefaultExpenseRecord(long userId, int categoryId, Category category)   {
         ExpenseRecord expense = new ExpenseRecord();
         expense.setUserId(userId);
         expense.setType("收入");
@@ -241,6 +256,8 @@ public class SetPasswordActivity extends AppCompatActivity {
         expense.setDate("2024-11-25");
         expense.setAmount(2022);
         expense.setRemarks("去看电影了");
+        expense.setCategoryName(category.getCategoryName());
+        expense.setCategoryIcon(category.getCategoryIcon());
 
         // 插入类别到数据库
         expenseRecordDao.insertRecord(expense);

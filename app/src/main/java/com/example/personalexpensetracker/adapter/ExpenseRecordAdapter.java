@@ -1,6 +1,7 @@
 package com.example.personalexpensetracker.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,8 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdapter.ViewHolder> {
-    private List<ExpenseRecordWithCategory> recordList;  // 修改为 ExpenseRecordWithCategory 类型
-    private Context context;
+    private final List<ExpenseRecordWithCategory> recordList;
+    private final Context context;
 
     public ExpenseRecordAdapter(Context context, List<ExpenseRecordWithCategory> recordList) {
         this.context = context;
@@ -53,6 +54,10 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
         ExpenseRecordWithCategory recordWithCategory = recordList.get(position);
         ExpenseRecord record = recordWithCategory.expenseRecord;
         Category category = recordWithCategory.category;
+
+        Log.d("ExpenseRecordDisplay", "查看适配器中的记录信息：Record Date: " + record.getDate() + ", Amount: " + record.getAmount() +
+                ", Category: " + (category != null ? category.getCategoryName() : "Unknown"));
+
 
         // 设置日期
         holder.dateTextView.setText(record.getDate());

@@ -17,15 +17,33 @@ import java.util.Date;
 
 public class ExpenseRecord {
     @PrimaryKey(autoGenerate = true)
-    private long recordId;  // 采用 long 类型作为 ID
-    private long userId; // 外键，关联 User 类
+    private long recordId;
+
+    @ColumnInfo(name = "userId")
+    private long userId;
+
+    @ColumnInfo(name = "date")
     private String date; // 记录日期，如 "2024-11-07"
+
+    @ColumnInfo(name = "time")
     private String time; // 记录时间，如 "22:32"
+
+    @ColumnInfo(name = "type")
     private String type; // "收入" 或 "支出"
+
+    @ColumnInfo(name = "categoryId")
     private int categoryId; // 类别，如 "教育" 或 "娱乐"
+
+    @ColumnInfo(name = "categoryName")
     private String categoryName;
+
+    @ColumnInfo(name = "categoryIcon")
     private int categoryIcon;
+
+    @ColumnInfo(name = "remarks")
     private String remarks; // 备注信息
+
+    @ColumnInfo(name = "amount")
     private double amount; // 金额
 
     // Getter 和 Setter 方法

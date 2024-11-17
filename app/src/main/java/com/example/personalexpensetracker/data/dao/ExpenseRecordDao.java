@@ -42,10 +42,13 @@ public interface ExpenseRecordDao {
             "WHERE record.userId = :userId")
     List<ExpenseRecord> getCategoryIcon(long userId);
 
-        // 假设你有一个关联了 `Category` 类的 `ExpenseRecordWithCategory` 类型
-        @Transaction
-        @Query("SELECT * FROM expense_record WHERE userId = :userId")
-        List<ExpenseRecordWithCategory> getRecordsWithCategoriesByUserId(long userId);
+    @Transaction
+    @Query("SELECT expense_record.*, category.categoryName AS categoryName, category.categoryIcon AS categoryIcon " +
+            "FROM expense_record " +
+            "JOIN category ON expense_record.categoryId = category.categoryId " +
+            "WHERE expense_record.userId = :userId")
+    List<ExpenseRecordWithCategory> getExpenseWithCategoryByUserId(long userId);
+
 
 
 }

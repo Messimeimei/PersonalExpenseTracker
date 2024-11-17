@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -113,16 +114,18 @@ public class ExpenseRecordDisplayActivity extends AppCompatActivity
         // 获取用户的id
         SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
         Long userId = sharedPreferences.getLong("userId", 00000001);
+        Log.d("ExpenseRecordDisplay", "查看一下当前登录的用户idId: " + userId);  // 打印userId
+
 
         // 获取数据库实例
         AppDatabase db = AppDatabase.getInstance(this);
         ExpenseRecordDao expenseRecordDao = db.expenseRecordDao();
-        CategoryDao categoryDao = db.categoryDao();
 
         // 从数据库中获取用户的记录
         AppExecutors.getDiskIO().execute(() -> {
             // 获取带有类别信息的记录
-            List<ExpenseRecordWithCategory> recordList = expenseRecordDao.getRecordsWithCategoriesByUserId(userId);
+            List<ExpenseRecordWithCategory> recordList = expenseRecordDao.getExpenseWithCategoryByUserId(userId);
+
 
             // 在主线程中更新 RecyclerView
             runOnUiThread(() -> {
