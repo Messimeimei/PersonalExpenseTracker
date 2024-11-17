@@ -10,14 +10,18 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.personalexpensetracker.R;
+import com.example.personalexpensetracker.data.model.Category;
 import com.example.personalexpensetracker.data.model.ExpenseRecord;
+import com.example.personalexpensetracker.data.model.ExpenseRecordWithCategory;
+import com.google.android.material.imageview.ShapeableImageView;
+
 import java.util.List;
 
 public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdapter.ViewHolder> {
-    private List<ExpenseRecord> recordList;
+    private List<ExpenseRecordWithCategory> recordList;  // 修改为 ExpenseRecordWithCategory 类型
     private Context context;
 
-    public ExpenseRecordAdapter(Context context, List<ExpenseRecord> recordList) {
+    public ExpenseRecordAdapter(Context context, List<ExpenseRecordWithCategory> recordList) {
         this.context = context;
         this.recordList = recordList;
     }
@@ -29,10 +33,10 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
         public ViewHolder(View view) {
             super(view);
             dateTextView = view.findViewById(R.id.dateTextView);
-            outAmountLabelTextView = view.findViewById(R.id.outAmountLabelTextView);  // 修改 ID
-            outAmountTextView = view.findViewById(R.id.outAmountTextView);  // 修改 ID
-            inAmountLabelTextView = view.findViewById(R.id.inAmountLabelTextView);  // 修改 ID
-            inAmountTextView = view.findViewById(R.id.inAmountTextView);  // 修改 ID
+            outAmountLabelTextView = view.findViewById(R.id.outAmountLabelTextView);
+            outAmountTextView = view.findViewById(R.id.outAmountTextView);
+            inAmountLabelTextView = view.findViewById(R.id.inAmountLabelTextView);
+            inAmountTextView = view.findViewById(R.id.inAmountTextView);
             recordDetailContainer = view.findViewById(R.id.recordDetailContainer);
         }
     }
@@ -46,7 +50,9 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ExpenseRecord record = recordList.get(position);
+        ExpenseRecordWithCategory recordWithCategory = recordList.get(position);
+        ExpenseRecord record = recordWithCategory.expenseRecord;
+        Category category = recordWithCategory.category;
 
         // 设置日期
         holder.dateTextView.setText(record.getDate());
@@ -54,12 +60,12 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
         // 计算当天的收入和支出
         double totalIncome = 0.0;
         double totalExpense = 0.0;
-        for (ExpenseRecord r : recordList) {
-            if (r.getDate().equals(record.getDate())) {
-                if (r.getAmount() > 0) {
-                    totalIncome += r.getAmount();
+        for (ExpenseRecordWithCategory r : recordList) {
+            if (r.expenseRecord.getDate().equals(record.getDate())) {
+                if (r.expenseRecord.getAmount() > 0) {
+                    totalIncome += r.expenseRecord.getAmount();
                 } else {
-                    totalExpense += Math.abs(r.getAmount());
+                    totalExpense += Math.abs(r.expenseRecord.getAmount());
                 }
             }
         }
@@ -76,7 +82,6 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
         holder.inAmountLabelTextView.setTextColor(ContextCompat.getColor(context, R.color.text_deep_grey));
         holder.inAmountLabelTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.background_grey));
 
-
         // 设置支出和收入金额的颜色
         holder.outAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.black));
         holder.inAmountTextView.setTextColor(ContextCompat.getColor(context, R.color.black));
@@ -85,20 +90,22 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
         holder.recordDetailContainer.removeAllViews();
 
         // 动态加载每一条记录
-        for (ExpenseRecord r : recordList) {
-            if (r.getDate().equals(record.getDate())) {
+        for (ExpenseRecordWithCategory r : recordList) {
+            if (r.expenseRecord.getDate().equals(record.getDate())) {
                 View recordDetailView = LayoutInflater.from(context).inflate(R.layout.item_record_single, holder.recordDetailContainer, false);
 
+                ShapeableImageView categoryLogo = recordDetailView.findViewById(R.id.categoryLogo);
                 TextView timeTextView = recordDetailView.findViewById(R.id.timeTextView);
                 TextView categoryTextView = recordDetailView.findViewById(R.id.categoryTextView);
                 TextView remarksTextView = recordDetailView.findViewById(R.id.remarksTextView);
                 TextView amountTextView = recordDetailView.findViewById(R.id.amountTextView);
 
                 // 设置记录详情
-                timeTextView.setText(r.getTime());
-                categoryTextView.setText(r.getCategory());
-                remarksTextView.setText(r.getRemarks());
-                amountTextView.setText(String.valueOf(r.getAmount()));
+                timeTextView.setText(r.expenseRecord.getTime());
+                categoryTextView.setText(category != null ? category.getCategoryName() : "未知");
+                remarksTextView.setText(r.expenseRecord.getRemarks());
+                amountTextView.setText(String.valueOf(r.expenseRecord.getAmount()));
+                categoryLogo.setImageResource(category != null ? category.getCategoryIcon() : R.drawable.app_logo);  // 默认图标
 
                 // 设置金额颜色为黑色
                 amountTextView.setTextColor(ContextCompat.getColor(context, R.color.black));

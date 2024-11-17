@@ -1,7 +1,9 @@
 package com.example.personalexpensetracker.data.database;
 
+import com.example.personalexpensetracker.data.dao.CategoryDao;
 import com.example.personalexpensetracker.data.dao.ExpenseRecordDao;
 import com.example.personalexpensetracker.data.dao.UserDao;
+import com.example.personalexpensetracker.data.model.Category;
 import com.example.personalexpensetracker.data.model.ExpenseRecord;
 import com.example.personalexpensetracker.data.model.User;
 import androidx.room.Database;
@@ -9,10 +11,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {User.class, ExpenseRecord.class}, version = 3)
+@Database(entities = {User.class, ExpenseRecord.class, Category.class}, version = 12)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
-    public abstract ExpenseRecordDao recordDao();
+    public abstract ExpenseRecordDao expenseRecordDao();
+    public abstract CategoryDao categoryDao();
 
     private static volatile AppDatabase INSTANCE;
 

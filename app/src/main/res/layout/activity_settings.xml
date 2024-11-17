@@ -1,0 +1,244 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/background_grey">
+
+    <!-- 返回箭头和标题栏 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/Argentina_blue"
+            android:padding="16dp">
+
+        <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_arrow_back"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="账户设置"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- 顶部间距 -->
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/white_smoke"/>
+
+    <!-- 设置内容布局 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/white_smoke">
+
+        <!-- 头像行 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="头像"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/app_logo"
+                    app:shapeAppearanceOverlay="@style/RoundedCornersImage"
+                    android:layout_marginEnd="8dp"/>
+
+            <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- ID行 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ID"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:id="@+id/userIdTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="61793910"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- 昵称行 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="昵称"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:id="@+id/nicknameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Disfruta el momento"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- 手机号行 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="手机号"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:id="@+id/phoneTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未绑定"
+                    android:textSize="16sp"
+                    android:textColor="@color/Argentina_yellow"/>
+
+            <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- 微信行 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="微信"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Disfruta el momento"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- 应急联系方式行 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="应急联系方式"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未设置"
+                    android:textSize="16sp"
+                    android:textColor="@color/Argentina_yellow"/>
+
+            <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- 注销账号 -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="申请注销账号"
+                android:textSize="16sp"
+                android:textColor="@color/grey"
+                android:padding="16dp"
+                android:gravity="center"/>
+
+        <!-- 退出登录按钮 -->
+        <!-- 注册按钮 -->
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="退出登录"
+                android:layout_marginTop="24dp"
+                app:backgroundTint="@color/Argentina_blue"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+</LinearLayout>

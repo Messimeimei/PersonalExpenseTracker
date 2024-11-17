@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+        <!-- 关闭按钮 -->
+        <ImageView
+                android:id="@+id/closeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_close"
+                android:tint="@color/black"
+                android:layout_gravity="start"/>
+    </LinearLayout>
+
+    <!-- 第一部分：选择类型和日期 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+        <!-- 支出/入账 按钮 -->
+        <Button
+                android:id="@+id/btn_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出"
+                android:backgroundTint="@color/background_grey"
+                android:textColor="@color/text_light_grey"
+                android:minHeight="40dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:minWidth="48dp"/>
+
+        <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/btn_income"
+                android:minHeight="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="入账"
+                android:backgroundTint="@color/background_grey"
+                android:textColor="@color/text_light_grey"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:minWidth="48dp"/>
+
+        <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content"/>
+
+        <!-- 不计入收支 按钮 -->
+        <Button
+                android:id="@+id/btn_no_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不计入收支"
+                android:minHeight="40dp"
+                android:backgroundTint="@color/background_grey"
+                android:textColor="@color/text_light_grey"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"/>
+
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        <!-- 日期选择按钮 -->
+        <LinearLayout
+                android:id="@+id/selectedDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@color/midGrey">
+
+            <TextView
+                    android:id="@+id/btnDateSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11月10日"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"/>
+
+            <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_down_triangle"
+                    android:tint="@android:color/darker_gray"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+        <!-- 其他布局部分... -->
+
+        <!-- 第二部分：金额展示 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+            <!-- ¥ 符号 -->
+            <TextView
+                    android:id="@+id/tv_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥"
+                    android:textSize="36sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+            <!-- 金额输入展示空白区域 -->
+            <EditText
+                    android:id="@+id/tv_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textSize="24sp"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="8dp"
+                    android:inputType="none"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:background="@android:color/transparent"
+            android:textDirection="ltr"/>
+
+
+        </LinearLayout>
+
+        <!-- 灰色横线 -->
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="@color/text_light_grey"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"/>
+
+        <!-- 第三部分：滑动的图标区域 -->
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:fillViewport="true">
+
+        <GridLayout
+                android:id="@+id/icon_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="6"
+                android:orientation="horizontal"
+                android:padding="8dp">
+        </GridLayout>
+    </ScrollView>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+        <!-- 关闭按钮 -->
+        <TextView
+                android:id="@+id/addRemark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/black"
+                android:text="添加备注"
+                android:textColor="@color/text_blue"
+                android:layout_gravity="start"/>
+    </LinearLayout>
+
+
+
+    <!-- 第四部分：数字输入和确认按钮 -->
+    <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Silver"
+            android:backgroundTint="@color/background_light_grey"
+            android:columnCount="4"
+            android:padding="8dp">
+
+        <!-- 第一行 -->
+        <Button
+                android:id="@+id/btn_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="删除"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <!-- 第二行 -->
+        <Button
+                android:id="@+id/btn_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="6"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <!-- 确定按钮，占据三行的第4列 -->
+        <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_blue"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="3"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <!-- 第三行 -->
+        <Button
+                android:id="@+id/btn_7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="7"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <!-- 第四行 -->
+        <Button
+                android:id="@+id/btn_0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnSpan="2"
+                android:layout_columnWeight="2"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btn_dot"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="."
+                android:textColor="@color/black"
+                android:backgroundTint="@color/Argentina_white"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+    </GridLayout>
+
+
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.example.personalexpensetracker.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,20 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 检查登录状态
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false); // 默认没有登录
+
+        if (isLoggedIn) {
+            // 如果已登录，跳转到登录后的页面
+            Intent intent = new Intent(LandingActivity.this, ExpenseRecordDisplayActivity.class); // HomeActivity 是登录后的页面
+            startActivity(intent);
+            finish(); // 关闭当前活动
+            return; // 直接返回，不加载当前页面的内容
+        }
+
+        // 如果未登录，显示登录页面
         setContentView(R.layout.activity_landing);
 
         agreementCheckBox = findViewById(R.id.agreementCheckBox);
@@ -40,52 +55,16 @@ public class LandingActivity extends AppCompatActivity {
                             new Runnable() {
                                 @Override
                                 public void run() {
-
+                                    // 不操作
                                 }
                             }
                     );
-//                    showAgreementDialog();
                 }
             }
         });
     }
 
-    private void showAgreementDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // 设置自定义布局
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_agreement_checkbox, null);
-        builder.setView(dialogView);
-
-        // 获取布局中的视图
-        Button okButton = dialogView.findViewById(R.id.button_ok);
-        Button cancelButton = dialogView.findViewById(R.id.button_cancel);
-
-        // 创建对话框
-        AlertDialog dialog = builder.create();
-
-        // 设置按钮点击事件
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                agreementCheckBox.setChecked(true);
-                showLoginOptions();
-                dialog.dismiss(); // 关闭对话框
-            }
-        });
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss(); // 关闭对话框
-            }
-        });
-
-        dialog.setCancelable(true); // 允许外部点击关闭
-        dialog.show(); // 显示对话框
-    }
-
     private void showLoginOptions() {
-
         String[] options = {"微信登录", "手机号登录", "注册"};
         new AlertDialog.Builder(this)
                 .setTitle("选择登录方式")
@@ -93,13 +72,10 @@ public class LandingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
-                            // 微信登录
                             confirmWeChatLogin();
                         } else if (which == 1) {
-                            // 手机号登录
                             startActivity(new Intent(LandingActivity.this, PhoneLoginActivity.class));
                         } else if (which == 2) {
-                            // 注册
                             startActivity(new Intent(LandingActivity.this, RegisterActivity.class));
                         }
                     }

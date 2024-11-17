@@ -15,10 +15,15 @@
     <color name="Silver">#C0C0C0</color>
     <color name="DarkGray">#A9A9A9</color>
     <color name="background_grey">#f3f3f3</color>
-    <color name="text_deep_grey">#7c7c7c</color>
+    <color name="background_light_grey">#fafafa</color>
+    <color name="background_light_blue">#9E87B4E2</color>
     <color name="text_light_grey">#b1b1b1</color>
     <color name="background_white">#fbfbfb</color>
     <color name="background_light_white">#7CFBFBFB</color>
+    <color name="text_deep_grey">#7c7c7c</color>
+    <color name="text_blue">#7989aa</color>
+
+
 
 
 

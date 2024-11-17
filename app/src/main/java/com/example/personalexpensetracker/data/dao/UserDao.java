@@ -8,7 +8,7 @@ import androidx.room.Query;
 @Dao
 public interface UserDao {
     @Insert
-    void insert(User user);
+    long insert(User user);
 
     @Query("SELECT * FROM user WHERE phone = :phone LIMIT 1")
     User getUserByPhone(String phone);
@@ -16,6 +16,8 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE nickname = :username AND password = :password LIMIT 1")
     User login(String username, String password);
+
+
 }
 
 

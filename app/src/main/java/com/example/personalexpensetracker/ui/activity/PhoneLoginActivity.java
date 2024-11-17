@@ -1,6 +1,7 @@
 package com.example.personalexpensetracker.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -16,7 +17,6 @@ import com.example.personalexpensetracker.data.model.User;
 import com.example.personalexpensetracker.utils.AppExecutors;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.example.personalexpensetracker.utils.DialogUtils;
-import android.util.Patterns;
 
 public class PhoneLoginActivity extends AppCompatActivity {
     private EditText phoneEditText, passwordEditText;
@@ -117,7 +117,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Toast.makeText(PhoneLoginActivity.this, "该手机号未注册", Toast.LENGTH_SHORT).show();
                 });
-            }  else if (!user.password.equals(password)) {
+            }  else if (!user.getPassword().equals(password)) {
                 // 密码错误
                 runOnUiThread(() -> {
                     Toast.makeText(PhoneLoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
@@ -127,6 +127,16 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Toast.makeText(PhoneLoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 });
+                // 保存登录状态
+                SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong("'userId'",user.getUserId());
+                editor.putString("formattedUserId", String.valueOf(user.getFormattedId()));
+                editor.putString("nickname", user.getNickname());
+                editor.putString("phone", user.getPhone());
+                editor.putBoolean("isLoggedIn", true);
+                editor.apply();
+
                 // 跳转到下一个页面
                 startActivity(new Intent(PhoneLoginActivity.this, ExpenseRecordDisplayActivity.class));
                 finish();

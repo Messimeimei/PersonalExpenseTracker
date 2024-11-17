@@ -8,17 +8,25 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+import com.example.personalexpensetracker.data.dao.ExpenseRecordDao;
 import com.example.personalexpensetracker.data.dao.UserDao;
+import com.example.personalexpensetracker.data.dao.CategoryDao;
+import com.example.personalexpensetracker.data.model.Category;
 import com.example.personalexpensetracker.data.database.AppDatabase;
+import com.example.personalexpensetracker.data.model.ExpenseRecord;
 import com.example.personalexpensetracker.data.model.User;
 import com.example.personalexpensetracker.utils.AppExecutors;
 import com.google.android.material.button.MaterialButton;
 import com.example.personalexpensetracker.R;
+
+import java.util.List;
 
 public class SetPasswordActivity extends AppCompatActivity {
 
@@ -26,6 +34,8 @@ public class SetPasswordActivity extends AppCompatActivity {
     private MaterialButton registerButton;
     private ImageView backButton, passwordEyeIcon, confirmPasswordEyeIcon;
     private UserDao userDao;
+    private CategoryDao categoryDao;
+    private ExpenseRecordDao expenseRecordDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,7 @@ public class SetPasswordActivity extends AppCompatActivity {
         passwordEyeIcon = findViewById(R.id.passwordEyeIcon);  // 密码眼睛图标
         confirmPasswordEyeIcon = findViewById(R.id.confirmPasswordEyeIcon);  // 确认密码眼睛图标
 
+
         // 显示之前注册的手机号
         Intent intent = getIntent();
         String registeredPhone = intent.getStringExtra("phoneNumber"); // 接受传来的手机号变量
@@ -55,6 +66,8 @@ public class SetPasswordActivity extends AppCompatActivity {
 
         AppDatabase db = AppDatabase.getInstance(this);
         userDao = db.userDao();
+        categoryDao = db.categoryDao();
+        expenseRecordDao = db.expenseRecordDao();
 
         // 创建一个通用的 TextWatcher
         TextWatcher textWatcher = new TextWatcher() {
@@ -89,11 +102,21 @@ public class SetPasswordActivity extends AppCompatActivity {
                 Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
                 // 保存用户数据
                 User user = new User();
-                user.nickname = nickname;
-                user.password = password;
-                user.phone = phoneUneditableText.getText().toString();
+                user.setNickname(nickname);
+                user.setPassword(password);
+                user.setPhone(phoneUneditableText.getText().toString());
                 AppExecutors.getDiskIO().execute(() -> {
-                    userDao.insert(user);
+                    // 插入User数据并获取userId
+                    long newUserId = userDao.insert(user);
+                    // 插入默认类别，传入有效的userId
+                    createDefaultCategories(newUserId);
+                    // 获取插入的类别Id
+                    List<Category> categories = categoryDao.getCategoriesByUserIdAndType("收入");
+                    if (!categories.isEmpty()) {
+                        int firstCategoryId = categories.get(0).getCategoryId();
+                        // 插入一条示例的ExpenseRecord，类型是收入
+                        createDefaultExpenseRecord(newUserId, firstCategoryId);
+                    }
                     runOnUiThread(() -> {
                         startActivity(new Intent(SetPasswordActivity.this, PhoneLoginActivity.class));
                     });
@@ -175,5 +198,51 @@ public class SetPasswordActivity extends AppCompatActivity {
             registerButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white_smoke)));
             registerButton.setTextColor(getResources().getColor(R.color.gains_boro));
         }
+    }
+
+    private void createDefaultCategories(long userId) {
+        String[] expenseCategories = {"食物", "娱乐", "交通"};
+        String[] incomeCategories = {"工资", "奖金"};
+        String[] nonBudgetCategories = {"赠送", "其他"};
+
+        for (String categoryName : expenseCategories) {
+            Category category = new Category();
+            category.setUserId(userId);
+            category.setCategoryName(categoryName);
+            category.setType("支出");
+            category.setCategoryIcon(R.drawable.app_logo);
+            categoryDao.insertCategory(category);
+        }
+
+        for (String categoryName : incomeCategories) {
+            Category category = new Category();
+            category.setUserId(userId);
+            category.setCategoryName(categoryName);
+            category.setType("收入");
+            category.setCategoryIcon(R.drawable.app_logo);
+            categoryDao.insertCategory(category);
+        }
+
+        for (String categoryName : nonBudgetCategories) {
+            Category category = new Category();
+            category.setUserId(userId);
+            category.setCategoryName(categoryName);
+            category.setType("不计入收支");
+            category.setCategoryIcon(R.drawable.app_logo);
+            categoryDao.insertCategory(category);
+        }
+    }
+
+    private void createDefaultExpenseRecord(long userId, int categoryId) {
+        ExpenseRecord expense = new ExpenseRecord();
+        expense.setUserId(userId);
+        expense.setType("收入");
+        expense.setCategoryId(categoryId);
+        expense.setDate("2024-11-25");
+        expense.setAmount(2022);
+        expense.setRemarks("去看电影了");
+
+        // 插入类别到数据库
+        expenseRecordDao.insertRecord(expense);
     }
 }
