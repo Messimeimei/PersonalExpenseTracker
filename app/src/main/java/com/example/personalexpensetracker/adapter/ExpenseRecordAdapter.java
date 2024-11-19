@@ -179,4 +179,33 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
     public int getItemCount() {
         return dates.size(); // 返回分组的日期数量
     }
+
+    public void updateRecords(List<ExpenseRecordWithCategory> newRecords) {
+        groupedRecords.clear();
+        for (ExpenseRecordWithCategory record : newRecords) {
+            String date = record.expenseRecord.getDate();
+            if (!groupedRecords.containsKey(date)) {
+                groupedRecords.put(date, new ArrayList<>());
+            }
+            groupedRecords.get(date).add(record);
+        }
+
+        // 更新日期并重新排序
+        dates.clear();
+        dates.addAll(groupedRecords.keySet());
+        Collections.sort(dates, (d1, d2) -> {
+            try {
+                Date date1 = dateFormat.parse(d1);
+                Date date2 = dateFormat.parse(d2);
+                return date2.compareTo(date1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        });
+
+        // 通知 RecyclerView 更新
+        notifyDataSetChanged();
+    }
+
 }

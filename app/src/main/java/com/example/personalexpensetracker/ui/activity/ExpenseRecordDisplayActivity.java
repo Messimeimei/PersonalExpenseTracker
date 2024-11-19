@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,8 @@ import com.example.personalexpensetracker.data.model.ExpenseRecordWithCategory;
 import com.example.personalexpensetracker.ui.fragment.MonthSelectionBottomSheet;
 import com.example.personalexpensetracker.ui.fragment.RecordOneBottomSheet;
 import com.example.personalexpensetracker.ui.fragment.TypeSelectionBottomSheet;
+import com.example.personalexpensetracker.ui.viewmodel.ExpenseRecordDisplayViewModel;
+import com.example.personalexpensetracker.ui.viewmodel.ExpenseRecordDisplayViewModelFactory;
 import com.example.personalexpensetracker.utils.AppExecutors;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
@@ -40,6 +43,8 @@ public class ExpenseRecordDisplayActivity extends AppCompatActivity
     private TextView typeNameTextView, monthYearText, detailsText, statsText, assetsText, settingsText;
     private ImageView detailsIcon, statsIcon, assetsIcon, settingsIcon;
     private LinearLayout detailsButton, statsButton, assetsButton, settingsButton;
+    private ExpenseRecordDisplayViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,19 +126,31 @@ public class ExpenseRecordDisplayActivity extends AppCompatActivity
         AppDatabase db = AppDatabase.getInstance(this);
         ExpenseRecordDao expenseRecordDao = db.expenseRecordDao();
 
-        // 从数据库中获取用户的记录
-        AppExecutors.getDiskIO().execute(() -> {
-            // 获取带有类别信息的记录
-            List<ExpenseRecordWithCategory> recordList = expenseRecordDao.getExpenseWithCategoryByUserId(userId);
+        // 使用 Factory 创建 ViewModel
+        ExpenseRecordDisplayViewModelFactory factory = new ExpenseRecordDisplayViewModelFactory(getApplication(), expenseRecordDao);
+        viewModel = new ViewModelProvider(this, factory).get(ExpenseRecordDisplayViewModel.class);
+        viewModel.loadExpenseRecords(userId);
 
-
-            // 在主线程中更新 RecyclerView
-            runOnUiThread(() -> {
-                recordsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                ExpenseRecordAdapter adapter = new ExpenseRecordAdapter(this, recordList);
-                recordsRecyclerView.setAdapter(adapter);
-            });
+        // 通过viewmodel加载数据
+        viewModel.getExpenseRecordsLiveData().observe(this, recordList -> {
+            recordsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            ExpenseRecordAdapter adapter = new ExpenseRecordAdapter(this, recordList);
+            recordsRecyclerView.setAdapter(adapter);
         });
+
+//        // 从数据库中获取用户的记录
+//        AppExecutors.getDiskIO().execute(() -> {
+//            // 获取带有类别信息的记录
+//            List<ExpenseRecordWithCategory> recordList = expenseRecordDao.getExpenseWithCategoryByUserId(userId);
+//
+//
+//            // 在主线程中更新 RecyclerView
+//            runOnUiThread(() -> {
+//                recordsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//                ExpenseRecordAdapter adapter = new ExpenseRecordAdapter(this, recordList);
+//                recordsRecyclerView.setAdapter(adapter);
+//            });
+//        });
 
         // 全部类型按钮的圆角
         setupButtonsShape();
@@ -192,7 +209,17 @@ public class ExpenseRecordDisplayActivity extends AppCompatActivity
         // 记一笔按钮点击事件
         addRecordButton.setOnClickListener(v -> {
             RecordOneBottomSheet bottomSheet = new RecordOneBottomSheet();
-            bottomSheet.setOnRecordOneSelectedListener(this);
+            bottomSheet.setOnRecordOneSelectedListener(new RecordOneBottomSheet.OnRecordOneSelectedListener() {
+                @Override
+                public void onRecordOneSelected(ExpenseRecord newRecord) {
+                    // 动态添加新记录到数据库
+                    SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
+                    long userId = sharedPreferences.getLong("userId", 00000001);
+
+                    // 调用 ViewModel 添加记录
+                    viewModel.addExpenseRecord(newRecord, userId);
+                }
+            });
             bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
         });
 
@@ -210,10 +237,6 @@ public class ExpenseRecordDisplayActivity extends AppCompatActivity
         monthYearText.setText(tag);
     }
 
-    @Override
-    public void onRecordOneSelected() {
-        // 不做操作
-    }
 
     private void onButtonClick(ImageView clickedIcon, TextView clickedText) {
         // 改变所有图标和文字颜色为灰色
@@ -239,6 +262,11 @@ public class ExpenseRecordDisplayActivity extends AppCompatActivity
     private void openSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRecordOneSelected(ExpenseRecord newRecord) {
+
     }
 }
 

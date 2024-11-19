@@ -1,31 +1,50 @@
 package com.example.personalexpensetracker.ui.viewmodel;
 
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.personalexpensetracker.data.dao.ExpenseRecordDao;
-import com.example.personalexpensetracker.data.database.AppDatabase;
+import com.example.personalexpensetracker.data.model.ExpenseRecord;
 import com.example.personalexpensetracker.data.model.ExpenseRecordWithCategory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-public class ExpenseRecordDisplayViewModel extends ViewModel {
-    private final LiveData<List<ExpenseRecordWithCategory>> expenseRecords;
+public class ExpenseRecordDisplayViewModel extends AndroidViewModel {
+    private final ExpenseRecordDao expenseRecordDao;
+    private final MutableLiveData<List<ExpenseRecordWithCategory>> expenseRecordsLiveData = new MutableLiveData<>();
+    private final Executor executor = Executors.newSingleThreadExecutor();
 
-    public ExpenseRecordDisplayViewModel(AppDatabase database, long userId) {
-        // 从 DAO 获取与用户 ID 关联的数据
-        ExpenseRecordDao expenseRecordDao = database.expenseRecordDao();
-        expenseRecords = expenseRecordDao.getExpenseWithCategoryByUserId(userId);
+    public ExpenseRecordDisplayViewModel(@NonNull Application application, ExpenseRecordDao expenseRecordDao) {
+        super(application);
+        this.expenseRecordDao = expenseRecordDao;
     }
 
-    public ExpenseRecordDisplayViewModel(LiveData<List<ExpenseRecordWithCategory>> expenseRecords) {
-        this.expenseRecords = expenseRecords;
+    public LiveData<List<ExpenseRecordWithCategory>> getExpenseRecordsLiveData() {
+        return expenseRecordsLiveData;
     }
 
-    // 暴露一个方法提供 LiveData
-    public LiveData<List<ExpenseRecordWithCategory>> getExpenseRecords() {
-        return expenseRecords;
+    public void loadExpenseRecords(long userId) {
+        executor.execute(() -> {
+            List<ExpenseRecordWithCategory> records = expenseRecordDao.getExpenseWithCategoryByUserId(userId);
+            expenseRecordsLiveData.postValue(records); // 通知 UI
+        });
+    }
+
+    // 动态添加记录的方法
+    public void addExpenseRecord(ExpenseRecord newRecord, long userId) {
+        executor.execute(() -> {
+            // 插入数据库
+            expenseRecordDao.insertRecord(newRecord);
+
+            // 重新加载数据库中的记录，确保更新同步
+            List<ExpenseRecordWithCategory> updatedRecords = expenseRecordDao.getExpenseWithCategoryByUserId(userId);
+            expenseRecordsLiveData.postValue(updatedRecords); // 通知 UI
+        });
     }
 }
-
-

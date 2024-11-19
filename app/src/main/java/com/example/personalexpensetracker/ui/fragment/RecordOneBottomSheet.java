@@ -45,8 +45,9 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
     private ExpenseRecordDao expenseRecordDao;
 
     public interface OnRecordOneSelectedListener {
-        void onRecordOneSelected();
+        void onRecordOneSelected(ExpenseRecord newRecord);
     }
+
 
     public void setOnRecordOneSelectedListener(OnRecordOneSelectedListener listener) {
         this.listener = listener;
@@ -99,12 +100,10 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
                 }
 
                 AppExecutors.getDiskIO().execute(() -> {
-                    expenseRecordDao.insertRecord(record);  // 使用实际的 DAO 插入方法
-                    getActivity().runOnUiThread(() -> {
-                        if (listener != null) listener.onRecordOneSelected();  // 回调刷新显示
-
-                        dismiss();
-                    });
+                    if (listener != null) {
+                        listener.onRecordOneSelected(record);
+                        dismiss(); // 关闭弹窗
+                    }
                 });
             }
         });

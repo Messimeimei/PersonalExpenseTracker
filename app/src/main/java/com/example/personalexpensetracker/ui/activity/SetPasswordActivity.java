@@ -126,7 +126,7 @@ public class SetPasswordActivity extends AppCompatActivity {
                     if (!categories.isEmpty()) {
                         int firstCategoryId = categories.get(0).getCategoryId();
                         // 插入一条示例的ExpenseRecord，类型是收入
-                        createDefaultExpenseRecord(newUserId, firstCategoryId, categories.get(0));
+                        // createDefaultExpenseRecord(newUserId, firstCategoryId, categories.get(0));
                     }
                     runOnUiThread(() -> {
                         startActivity(new Intent(SetPasswordActivity.this, PhoneLoginActivity.class));
