@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,11 +46,6 @@ public class SetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
-        // todo：注册前删掉所有的文件，方便测试
-        File dbFile = SetPasswordActivity.this.getDatabasePath("your_database_name.db");
-        if (dbFile.exists()) {
-            dbFile.delete(); // 删除数据库文件
-        }
 
 
         // 初始化视图
@@ -121,12 +117,12 @@ public class SetPasswordActivity extends AppCompatActivity {
                 user.setRegisterDate(registerDate);
                 AppExecutors.getDiskIO().execute(() -> {
                     // 插入User数据并获取userId
-                    userDao.insert(user);
-                    long newUserId = user.getUserId();
+                    long newUserId = userDao.insert(user);
+                    Log.d("注册新用户的Id", "查看一下当前注册的用户Id: " + newUserId);
                     // 插入默认类别，传入有效的userId
                     createDefaultCategories(newUserId);
                     // 获取插入的类别Id
-                    List<Category> categories = categoryDao.getCategoriesByUserIdAndType("收入");
+                    List<Category> categories = categoryDao.getCategoriesByUserIdAndType("收入", newUserId);
                     if (!categories.isEmpty()) {
                         int firstCategoryId = categories.get(0).getCategoryId();
                         // 插入一条示例的ExpenseRecord，类型是收入

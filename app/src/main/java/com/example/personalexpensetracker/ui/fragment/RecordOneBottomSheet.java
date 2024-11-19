@@ -24,8 +24,13 @@ import com.example.personalexpensetracker.utils.AppExecutors;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class RecordOneBottomSheet extends BottomSheetDialogFragment {
 
@@ -67,10 +72,9 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
             if (!amountText.isEmpty() && selectedCategory != null) {
                 double amount = Double.parseDouble(amountText);
 
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPreferences", MODE_PRIVATE);
                 Long userId = sharedPreferences.getLong("userId", 0000001);
                 Log.d("记录插到哪位用户", "查看一下当前记录插到了哪个用户那里: " + userId);  // 打印userId
-
 
                 ExpenseRecord record = new ExpenseRecord();
                 record.setType(currentSelectedButton.getText().toString()); // 设置支出、收入、不计入收支
@@ -80,6 +84,19 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
                 record.setDate(btnDateSelector.getText().toString());
                 record.setCategoryId(selectedCategory.getCategoryId());
                 record.setUserId(userId);
+
+                // 判断日期是否为当天
+                String selectedDate = btnDateSelector.getText().toString();
+                String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                if (selectedDate.equals(todayDate)) {
+                    // 如果是当天，设置为当前时间
+                    String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                    record.setTime(currentTime);
+                } else {
+                    // 如果不是当天，设置为 23:59
+                    record.setTime("23:59");
+                }
 
                 AppExecutors.getDiskIO().execute(() -> {
                     expenseRecordDao.insertRecord(record);  // 使用实际的 DAO 插入方法
@@ -91,6 +108,7 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
                 });
             }
         });
+
 
 
         tv_amount.addTextChangedListener(new TextWatcher() {
@@ -119,11 +137,15 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
         Button btnNoAccount = view.findViewById(R.id.btn_no_account);
         icon_grid = view.findViewById(R.id.icon_grid);  // 这个是ScrollView中的GridLayout
 
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPreferences", MODE_PRIVATE);
+        Long userId = sharedPreferences.getLong("userId", 00000001);
+        Log.d("记一笔中的id查看", "查看一下当前登录的用户Id: " + userId);  // 打印userId
+
         // 从数据库获取所有类别
         categoryDao = db.categoryDao();
 
         AppExecutors.getDiskIO().execute(() -> {
-            List<Category> categories = categoryDao.getAllCategories();
+            List<Category> categories = categoryDao.getCategoriesByUserId(userId);
             // 调用方法来加载数据
             loadCategoriesIntoGrid(categories, view);
         });
@@ -136,13 +158,13 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
 
         // 默认选中
         handleSelection(btnExpense);
-        loadCategoriesByType("支出");
+        loadCategoriesByType("支出", userId);
 
         // 设置支出、收入和不计入收支按钮点击事件
         btnExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadCategoriesByType("支出");
+                loadCategoriesByType("支出", userId);
                 handleSelection(btnExpense);
             }
         });
@@ -150,7 +172,7 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
         btnIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadCategoriesByType("收入");
+                loadCategoriesByType("收入", userId);
                 handleSelection(btnIncome);
             }
         });
@@ -158,7 +180,7 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
         btnNoAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadCategoriesByType("不计入收支");
+                loadCategoriesByType("不计入收支", userId);
                 handleSelection(btnNoAccount);
             }
         });
@@ -337,9 +359,9 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
         selectedButton.setTextColor(getResources().getColor(R.color.Argentina_blue)); // 阿根廷蓝色
     }
 
-    private void loadCategoriesByType(final String type) {
+    private void loadCategoriesByType(final String type, long userId) {
         AppExecutors.getDiskIO().execute(() -> {
-            final List<Category> categories = categoryDao.getCategoriesByUserIdAndType(type);
+            final List<Category> categories = categoryDao.getCategoriesByUserIdAndType(type, userId);
             getActivity().runOnUiThread(() -> {
                 loadCategoriesIntoGrid(categories, getView());
                 if (!categories.isEmpty()) {
@@ -362,7 +384,7 @@ public class RecordOneBottomSheet extends BottomSheetDialogFragment {
         int columns = 6; // 列数
         icon_grid.setColumnCount(columns);
 
-// 获取需要的填充数
+        // 获取需要的填充数
         int totalItems = categories.size();
         int rows = (int) Math.ceil((double) totalItems / columns);
         int fillersNeeded = (rows * columns) - totalItems; // 确保行数适配总项数

@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.personalexpensetracker.R;
+import com.example.personalexpensetracker.data.database.AppDatabase;
+
+import java.io.File;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -64,6 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
+
 
                 // 跳转到启动页面（例如 LoginActivity）
                 Intent intent = new Intent(SettingsActivity.this, PhoneLoginActivity.class);

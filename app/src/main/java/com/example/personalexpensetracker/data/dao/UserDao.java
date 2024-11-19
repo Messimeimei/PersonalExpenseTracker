@@ -10,6 +10,9 @@ public interface UserDao {
     @Insert
     long insert(User user);
 
+    @Query("DELETE  FROM user")
+    void deleteAllUsers();
+
     @Query("SELECT * FROM user WHERE phone = :phone LIMIT 1")
     User getUserByPhone(String phone);
 

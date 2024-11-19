@@ -15,8 +15,8 @@ public interface ExpenseRecordDao {
     @Update
     void updateRecord(ExpenseRecord record);
 
-    @Delete
-    void deleteRecord(ExpenseRecord record);
+    @Query("DELETE FROM expense_record")
+    void deleteAllExpenseRecords();
 
     // 修改后的查询，使用 date 字段代替 timestamp
     @Query("SELECT * FROM expense_record WHERE date LIKE :date || '%' ORDER BY date DESC")

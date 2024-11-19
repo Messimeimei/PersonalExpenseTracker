@@ -16,15 +16,41 @@ import com.example.personalexpensetracker.data.model.ExpenseRecord;
 import com.example.personalexpensetracker.data.model.ExpenseRecordWithCategory;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdapter.ViewHolder> {
-    private final List<ExpenseRecordWithCategory> recordList;
+    private final Map<String, List<ExpenseRecordWithCategory>> groupedRecords;
+    private final List<String> dates; // 用于记录分组的日期顺序
     private final Context context;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public ExpenseRecordAdapter(Context context, List<ExpenseRecordWithCategory> recordList) {
         this.context = context;
-        this.recordList = recordList;
+
+        // 按日期分组记录
+        groupedRecords = new HashMap<>();
+        for (ExpenseRecordWithCategory record : recordList) {
+            String date = record.expenseRecord.getDate();
+            if (!groupedRecords.containsKey(date)) {
+                groupedRecords.put(date, new ArrayList<>());
+            }
+            groupedRecords.get(date).add(record);
+        }
+
+        // 获取所有日期的列表并按降序排序
+        dates = new ArrayList<>(groupedRecords.keySet());
+        Collections.sort(dates, (d1, d2) -> {
+            try {
+                Date date1 = dateFormat.parse(d1);
+                Date date2 = dateFormat.parse(d2);
+                return date2.compareTo(date1); // 最新的日期排在前面
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,29 +77,29 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ExpenseRecordWithCategory recordWithCategory = recordList.get(position);
-        ExpenseRecord record = recordWithCategory.expenseRecord;
-        Category category = recordWithCategory.category;
+        String date = dates.get(position); // 获取当前分组的日期
+        List<ExpenseRecordWithCategory> recordsForDate = groupedRecords.get(date);
 
-        Log.d("ExpenseRecordDisplay", "查看适配器中的记录信息：Record Date: " + record.getDate() + ", Amount: " + record.getAmount() +
-                ", Category: " + (category != null ? category.getCategoryName() : "Unknown"));
-
+        if (recordsForDate == null) return;
 
         // 设置日期
-        holder.dateTextView.setText(record.getDate());
+        holder.dateTextView.setText(date);
 
         // 计算当天的收入和支出
         double totalIncome = 0.0;
         double totalExpense = 0.0;
-        for (ExpenseRecordWithCategory r : recordList) {
-            if (r.expenseRecord.getDate().equals(record.getDate())) {
-                if (r.expenseRecord.getAmount() > 0) {
-                    totalIncome += r.expenseRecord.getAmount();
-                } else {
-                    totalExpense += Math.abs(r.expenseRecord.getAmount());
-                }
+
+        for (ExpenseRecordWithCategory recordWithCategory : recordsForDate) {
+            ExpenseRecord record = recordWithCategory.expenseRecord;
+
+            // 根据记录的类型区分收入和支出
+            if ("入账".equals(record.getType())) {
+                totalIncome += record.getAmount(); // 入账金额累加
+            } else if ("支出".equals(record.getType())) {
+                totalExpense += Math.abs(record.getAmount()); // 支出金额累加，取绝对值
             }
         }
+
 
         // 设置支出和收入标签及金额
         holder.outAmountLabelTextView.setText("出");
@@ -95,39 +121,62 @@ public class ExpenseRecordAdapter extends RecyclerView.Adapter<ExpenseRecordAdap
         holder.recordDetailContainer.removeAllViews();
 
         // 动态加载每一条记录
-        for (ExpenseRecordWithCategory r : recordList) {
-            if (r.expenseRecord.getDate().equals(record.getDate())) {
-                View recordDetailView = LayoutInflater.from(context).inflate(R.layout.item_record_single, holder.recordDetailContainer, false);
+        // 动态加载每一条记录
+        for (ExpenseRecordWithCategory recordWithCategory : recordsForDate) {
+            View recordDetailView = LayoutInflater.from(context).inflate(R.layout.item_record_single, holder.recordDetailContainer, false);
 
-                ShapeableImageView categoryLogo = recordDetailView.findViewById(R.id.categoryLogo);
-                TextView timeTextView = recordDetailView.findViewById(R.id.timeTextView);
-                TextView categoryTextView = recordDetailView.findViewById(R.id.categoryTextView);
-                TextView remarksTextView = recordDetailView.findViewById(R.id.remarksTextView);
-                TextView amountTextView = recordDetailView.findViewById(R.id.amountTextView);
+            ShapeableImageView categoryLogo = recordDetailView.findViewById(R.id.categoryLogo);
+            TextView timeTextView = recordDetailView.findViewById(R.id.timeTextView);
+            TextView categoryTextView = recordDetailView.findViewById(R.id.categoryTextView);
+            TextView remarksTextView = recordDetailView.findViewById(R.id.remarksTextView);
+            TextView amountTextView = recordDetailView.findViewById(R.id.amountTextView);
 
-                // 设置记录详情
-                timeTextView.setText(r.expenseRecord.getTime());
-                categoryTextView.setText(category != null ? category.getCategoryName() : "未知");
-                remarksTextView.setText(r.expenseRecord.getRemarks());
-                amountTextView.setText(String.valueOf(r.expenseRecord.getAmount()));
-                categoryLogo.setImageResource(category != null ? category.getCategoryIcon() : R.drawable.app_logo);  // 默认图标
+            ExpenseRecord record = recordWithCategory.expenseRecord;
+            Category category = recordWithCategory.category;
 
-                // 设置金额颜色为黑色
-                amountTextView.setTextColor(ContextCompat.getColor(context, R.color.black));
+            // 设置记录详情
+            timeTextView.setText(record.getTime());
+            categoryTextView.setText(category != null ? category.getCategoryName() : "未知");
+            remarksTextView.setText(record.getRemarks());
 
-                // 确保金额在右侧显示
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) amountTextView.getLayoutParams();
-                params.gravity = Gravity.END;  // 确保金额在最右侧显示
-                amountTextView.setLayoutParams(params);
-
-                // 将当前记录添加到容器中
-                holder.recordDetailContainer.addView(recordDetailView);
+            // 根据记录类型设置金额前缀和颜色
+            String amountPrefix = ""; // 默认没有符号
+            switch (record.getType()) {
+                case "支出":
+                    amountPrefix = "-";
+                    amountTextView.setTextColor(ContextCompat.getColor(context, R.color.black)); // 支出颜色
+                    break;
+                case "入账":
+                    amountPrefix = "+";
+                    amountTextView.setTextColor(ContextCompat.getColor(context, R.color.Argentina_yellow)); // 入账颜色
+                    break;
+                case "不计入收支":
+                    amountTextView.setTextColor(ContextCompat.getColor(context, R.color.black)); // 不计入收支颜色
+                    break;
+                default:
+                    amountTextView.setTextColor(ContextCompat.getColor(context, R.color.black)); // 默认颜色
+                    break;
             }
+
+            // 设置金额文本（带上符号）
+            amountTextView.setText(amountPrefix + record.getAmount());
+
+            categoryLogo.setImageResource(category != null ? category.getCategoryIcon() : R.drawable.app_logo);  // 默认图标
+
+            // 确保金额在右侧显示
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) amountTextView.getLayoutParams();
+            params.gravity = Gravity.END;  // 确保金额在最右侧显示
+            amountTextView.setLayoutParams(params);
+
+            // 将当前记录添加到容器中
+            holder.recordDetailContainer.addView(recordDetailView);
         }
+
     }
+
 
     @Override
     public int getItemCount() {
-        return recordList.size();
+        return dates.size(); // 返回分组的日期数量
     }
 }

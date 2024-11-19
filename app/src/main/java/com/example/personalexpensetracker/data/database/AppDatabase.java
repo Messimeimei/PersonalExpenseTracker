@@ -11,7 +11,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {User.class, ExpenseRecord.class, Category.class}, version = 13)
+@Database(entities = {User.class, ExpenseRecord.class, Category.class}, version = 15)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract ExpenseRecordDao expenseRecordDao();

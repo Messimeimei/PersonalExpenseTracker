@@ -19,8 +19,8 @@ public interface CategoryDao {
     @Update
     void updateCategory(Category category);
 
-    @Delete
-    void deleteCategory(Category category);
+    @Query("DELETE FROM category")
+    void deleteAllCategories();
 
     @Query("SELECT categoryName FROM category WHERE categoryId = :categoryId")
     String getCategoryName(String categoryId);
@@ -36,7 +36,7 @@ public interface CategoryDao {
     List<Category> getCategoriesByUserId(long userId);
 
     // 根据用户id和所属类型返回对应type下所有的category
-    @Query("SELECT * FROM category WHERE type = :type")
-    List<Category> getCategoriesByUserIdAndType(String type);
+    @Query("SELECT * FROM category WHERE type = :type AND userId = :userId")
+    List<Category> getCategoriesByUserIdAndType(String type, long userId);
 
 }
